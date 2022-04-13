@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+
+  south-node1:
+    container_name: south-node1
+    image: scylladb/scylla:4.5.0
+    restart: always
+    command: --seeds=scylla-node1,south-node1 --smp 1 --memory 750M --overprovisioned 1 --api-address 0.0.0.0
+    volumes:
+      - "./scylla/scylla.yaml:/etc/scylla/scylla.yaml"
+      - "./scylla/cassandra-rackdc.properties.south-rack1:/etc/scylla/cassandra-rackdc.properties"
+      - "/tmp/scylla-exercise:/tmp/scylla-exercise"
+    networks:
+      web:
+
+  south-node2:
+    container_name: south-node2
+    image: scylladb/scylla:4.5.0
+    restart: always
+    command: --seeds=scylla-node1,south-node1 --smp 1 --memory 750M --overprovisioned 1 --api-address 0.0.0.0
+    volumes:
+      - "./scylla/scylla.yaml:/etc/scylla/scylla.yaml"
+      - "./scylla/cassandra-rackdc.properties.south-rack2:/etc/scylla/cassandra-rackdc.properties"
+    networks:
+      web:
+
+  south-node3:
+    container_name: south-node3
+    image: scylladb/scylla:4.5.0
+    restart: always
+    command: --seeds=scylla-node1,south-node1 --smp 1 --memory 750M --overprovisioned 1 --api-address 0.0.0.0
+    volumes:
+      - "./scylla/scylla.yaml:/etc/scylla/scylla.yaml"
+      - "./scylla/cassandra-rackdc.properties.south-rack3:/etc/scylla/cassandra-rackdc.properties"
+    networks:
+      web:
+
+networks:
+  web:
+    driver: bridge

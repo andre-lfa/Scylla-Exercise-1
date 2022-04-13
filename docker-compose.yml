@@ -10,6 +10,7 @@ services:
     volumes:
       - "./scylla/scylla.yaml:/etc/scylla/scylla.yaml"
       - "./scylla/cassandra-rackdc.properties.rack1:/etc/scylla/cassandra-rackdc.properties"
+      - "/tmp/scylla-exercise:/tmp/scylla-exercise"
     networks:
       web:
 
