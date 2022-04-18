@@ -1,0 +1,49 @@
+version: "3.7"
+
+services:
+  scylla-manager:
+    image: scylladb/scylla-manager
+    networks:
+      web:
+    depends_on:
+      - scylla-manager-db
+
+  scylla-manager-db:
+    image: scylladb/scylla
+    volumes:
+      - scylla_manager_db_data:/var/lib/scylla
+    networks:
+      web:
+    command: --smp 1 --memory 100M
+
+  scylla:
+    build:
+      context: .
+    image: scylladb/scylla-with-agent
+    volumes:
+      - scylla_data:/var/lib/scylla
+    networks:
+      web:
+    command: --smp 1 --memory 1G
+
+  minio:
+    image: minio/minio
+    volumes:
+      - minio_data:/data
+    networks:
+      web:
+    ports:
+      - "9001:9000"
+    environment:
+      MINIO_ACCESS_KEY: minio
+      MINIO_SECRET_KEY: minio123
+    command: server /data
+
+volumes:
+  minio_data:
+  scylla_data:
+  scylla_manager_db_data:
+
+networks:
+  web:
+    driver: bridge
