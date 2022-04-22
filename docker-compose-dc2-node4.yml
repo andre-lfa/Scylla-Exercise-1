@@ -1,0 +1,19 @@
+version: "3"
+
+services:
+
+  south-node4:
+    container_name: south-node4
+    image: scylladb/scylla:4.5.0
+    restart: always
+    command: --seeds=scylla-node1,south-node1 --smp 1 --memory 750M --overprovisioned 1 --api-address 0.0.0.0
+    volumes:
+      - "./scylla/scylla.yaml:/etc/scylla/scylla.yaml"
+      - "./scylla/cassandra-rackdc.properties.south-rack4:/etc/scylla/cassandra-rackdc.properties"
+      - "/tmp/scylla-exercise:/tmp/scylla-exercise"
+    networks:
+      web:
+
+networks:
+  web:
+    driver: bridge
