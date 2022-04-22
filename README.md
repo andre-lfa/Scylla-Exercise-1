@@ -106,3 +106,25 @@ Run repair using Scylla manager.
 ```sh
 sctool repair --cluster <CLUSTER_ID>
 ```
+
+### TASK 8:
+
+Decommission the old DC, keeping only the new created DC.
+
+[Remove a Data-Center from a Scylla Cluster](https://docs.scylladb.com/operating-scylla/procedures/cluster-management/decommissioning-data-center/#remove-a-data-center-from-a-scylla-cluster)
+
+```sh
+cqlsh> ALTER KEYSPACE exercise1 WITH replication = {'class': 'NetworkTopologyStrategy', 'south': '3'}  AND durable_writes = true;
+```
+
+```sh
+andre@ScyllaPC:~$ docker exec -it south-node1 nodetool status
+Datacenter: south
+=================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load       Tokens       Owns    Host ID                               Rack
+UN  172.19.0.3  1.19 MB    256          ?       f9b8d021-beab-4170-a13c-7780b46d065b  south1
+UN  172.19.0.7  1.19 MB    256          ?       7ddb87f7-8121-41f6-b982-d42451b1447c  south2
+UN  172.19.0.4  1.19 MB    256          ?       35698bd1-cea3-40b7-9d3e-3ae4312a5246  south3
+```
