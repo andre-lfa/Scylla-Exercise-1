@@ -68,7 +68,9 @@ cqlsh> CREATE TABLE exerciseSTCS (
 
 ### TASK 3:
 
-Insert 10,000 records in each of the tables, using loop and cqlsh.
+Insert 10,000 records in each of the tables. I've used a CSV file for each table. 
+
+Copy the files from the files folder to '/tmp/scylla-exercise/' in your machine or just create them using a generator or something. Just remember to change the file name in the command below.
 
 ```sh
 cqlsh> COPY exerciseLCS (field1 , field2 , field3) FROM '/tmp/scylla-exercise/data.csv' WITH DELIMITER = ',' AND HEADER = true;
