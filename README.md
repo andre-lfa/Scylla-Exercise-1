@@ -163,3 +163,28 @@ UN  172.19.0.3   1.15 MB    256          ?       f9b8d021-beab-4170-a13c-7780b46
 UN  172.19.0.7   1.19 MB    256          ?       7ddb87f7-8121-41f6-b982-d42451b1447c  south2
 UN  172.19.0.4   1.19 MB    256          ?       35698bd1-cea3-40b7-9d3e-3ae4312a5246  south3
 ```
+
+### Task 10
+
+Then kill one of the nodes, destroy one of the containers (kill the seed node).
+
+```sh
+andre@ScyllaPC:~/scylla-exercise_1$ docker rm -f south-node1
+south-node1
+andre@ScyllaPC:~/scylla-exercise_1$ docker exec -it south-node2 nodetool status
+Datacenter: south
+=================
+Status=Up/Down
+|/ State=Normal/Leaving/Joining/Moving
+--  Address     Load       Tokens       Owns    Host ID                               Rack
+DN  172.19.0.2  966.96 KB  256          ?       f9b8d021-beab-4170-a13c-7780b46d065b  south1
+UN  172.19.0.7  963.31 KB  256          ?       35698bd1-cea3-40b7-9d3e-3ae4312a5246  south3
+UN  172.19.0.4  966.58 KB  256          ?       7ddb87f7-8121-41f6-b982-d42451b1447c  south2
+UN  172.19.0.8  823.58 KB  256          ?       3ab11f46-6a6a-4fc4-9d0d-12187ea2bbbc  south4
+```
+
+### Task 11
+
+Replace procedure to replace this node we've killed.
+
+https://docs.scylladb.com/operating-scylla/procedures/cluster-management/replace-dead-node/
